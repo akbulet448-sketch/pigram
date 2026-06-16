@@ -10,9 +10,16 @@ interface ChatItemProps {
 }
 
 export default function ChatItem({ conversation, onClick }: ChatItemProps) {
+  const { contacts } = usePigram();
+
   const displayName = conversation.isGroup
     ? conversation.groupName || "Group Chat"
     : conversation.participants[0] || "Unknown";
+
+  // Get contact for online status
+  const contactId = conversation.isGroup ? undefined : conversation.participants[0];
+  const contact = contactId ? contacts.find(c => c.id === contactId) : undefined;
+  const isOnline = contact?.status === 'online';
 
   const lastMessagePreview = conversation.lastMessage
     ? conversation.lastMessage.text || "[Media]"
@@ -37,28 +44,33 @@ export default function ChatItem({ conversation, onClick }: ChatItemProps) {
   return (
     <button
       onClick={onClick}
-      className="w-full p-4 border-b border-border hover:bg-muted transition-colors text-left"
+      className="w-full p-3 border-b border-border hover:bg-muted/50 transition-colors text-left active:bg-muted"
     >
       <div className="flex items-start gap-3">
-        <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold flex-shrink-0">
-          {displayName.charAt(0).toUpperCase()}
+        <div className="relative flex-shrink-0">
+          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-lg shadow-sm">
+            {displayName.charAt(0).toUpperCase()}
+          </div>
+          {isOnline && (
+            <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-background"></div>
+          )}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-2 mb-1">
-            <h3 className="font-semibold truncate">{displayName}</h3>
+            <h3 className="font-semibold truncate text-foreground">{displayName}</h3>
             {conversation.lastMessageTime && (
-              <span className="text-xs text-muted-foreground flex-shrink-0">
+              <span className="text-xs text-muted-foreground flex-shrink-0 font-medium">
                 {formatTime(conversation.lastMessageTime)}
               </span>
             )}
           </div>
-          <p className="text-sm text-muted-foreground truncate">
+          <p className="text-sm text-muted-foreground truncate line-clamp-1">
             {lastMessagePreview}
           </p>
         </div>
         {conversation.unreadCount > 0 && (
-          <div className="w-5 h-5 bg-blue-500 text-white text-xs rounded-full flex items-center justify-center flex-shrink-0">
-            {conversation.unreadCount}
+          <div className="w-6 h-6 bg-primary text-white text-xs rounded-full flex items-center justify-center flex-shrink-0 font-semibold">
+            {conversation.unreadCount > 9 ? "9+" : conversation.unreadCount}
           </div>
         )}
       </div>

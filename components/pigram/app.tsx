@@ -9,6 +9,7 @@ import ChatsTab from "@/components/pigram/chats-tab";
 import ContactsTab from "@/components/pigram/contacts-tab";
 import CallsTab from "@/components/pigram/calls-tab";
 import SettingsTab from "@/components/pigram/settings-tab";
+import ProfileSetup from "@/components/pigram/profile-setup";
 import { PigramDataInitializer } from "@/components/pigram/data-initializer";
 import { MeetingLinkHandler } from "@/components/pigram/meeting-link-handler";
 
@@ -16,7 +17,7 @@ export default function PigramApp() {
   const [activeTab, setActiveTab] = useState<
     "chats" | "contacts" | "calls" | "settings"
   >("chats");
-  const { setCurrentUser } = usePigram();
+  const { setCurrentUser, profileCompleted, setProfileCompleted, currentUser } = usePigram();
   const { sdk } = usePiAuth();
 
   useEffect(() => {
@@ -33,6 +34,22 @@ export default function PigramApp() {
       }
     }
   }, [sdk, setCurrentUser]);
+
+  const handleProfileComplete = (displayName: string, avatar?: string) => {
+    if (currentUser) {
+      setCurrentUser({
+        ...currentUser,
+        displayName,
+        avatar,
+      });
+    }
+    setProfileCompleted(true);
+  };
+
+  // Show profile setup if not completed
+  if (!profileCompleted) {
+    return <ProfileSetup onProfileComplete={handleProfileComplete} />;
+  }
 
   const renderTab = () => {
     switch (activeTab) {

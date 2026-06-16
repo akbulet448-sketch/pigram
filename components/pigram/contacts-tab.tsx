@@ -13,6 +13,10 @@ export default function ContactsTab() {
 
   const filteredContacts = searchQuery ? searchContacts(searchQuery) : contacts;
 
+  // Separate online and offline contacts
+  const onlineContacts = filteredContacts.filter(c => c.status === 'online');
+  const offlineContacts = filteredContacts.filter(c => c.status !== 'online');
+
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
@@ -38,7 +42,7 @@ export default function ContactsTab() {
             placeholder="Search contacts..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-10 py-2 rounded-lg bg-muted text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-muted text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary transition-all"
           />
           {searchQuery && (
             <button
@@ -58,9 +62,35 @@ export default function ContactsTab() {
             <p>No contacts yet. Add one to get started!</p>
           </div>
         ) : (
-          filteredContacts.map((contact) => (
-            <ContactItem key={contact.id} contact={contact} />
-          ))
+          <>
+            {/* Online Contacts */}
+            {onlineContacts.length > 0 && (
+              <>
+                <div className="sticky top-0 bg-background/80 backdrop-blur-sm px-4 py-2 border-b border-border">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Online ({onlineContacts.length})
+                  </p>
+                </div>
+                {onlineContacts.map((contact) => (
+                  <ContactItem key={contact.id} contact={contact} />
+                ))}
+              </>
+            )}
+
+            {/* Offline Contacts */}
+            {offlineContacts.length > 0 && (
+              <>
+                <div className="sticky top-0 bg-background/80 backdrop-blur-sm px-4 py-2 border-b border-border">
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                    Contacts ({offlineContacts.length})
+                  </p>
+                </div>
+                {offlineContacts.map((contact) => (
+                  <ContactItem key={contact.id} contact={contact} />
+                ))}
+              </>
+            )}
+          </>
         )}
       </div>
 
