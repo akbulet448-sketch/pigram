@@ -4,17 +4,26 @@ export interface User {
   displayName: string;
   avatar?: string;
   piId: string;
+  status?: 'online' | 'offline' | 'away';
+  lastSeen?: number;
+  statusMessage?: string;
 }
 
 export interface Message {
   id: string;
   conversationId: string;
   senderId: string;
+  senderName?: string;
   text?: string;
   mediaType?: 'image' | 'video' | 'audio' | 'document';
   mediaUrl?: string;
   timestamp: number;
   status: 'sent' | 'delivered' | 'read';
+  reactions?: Record<string, string[]>; // emoji -> user ids
+  edited?: boolean;
+  editedAt?: number;
+  pinned?: boolean;
+  replyTo?: string;
 }
 
 export interface Conversation {
@@ -29,6 +38,8 @@ export interface Conversation {
   unreadCount: number;
   createdAt?: number;
   createdBy?: string;
+  muteNotifications?: boolean;
+  archived?: boolean;
 }
 
 export interface Contact {
@@ -38,6 +49,8 @@ export interface Contact {
   avatar?: string;
   piId: string;
   addedAt: number;
+  status?: 'online' | 'offline' | 'away';
+  lastSeen?: number;
 }
 
 export interface Call {
@@ -47,7 +60,7 @@ export interface Call {
   recipientId: string;
   recipientName: string;
   type: 'audio' | 'video';
-  status: 'outgoing' | 'incoming' | 'active' | 'ended';
+  status: 'outgoing' | 'incoming' | 'active' | 'ended' | 'missed';
   startTime: number;
   endTime?: number;
   duration?: number;
