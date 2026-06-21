@@ -20,6 +20,8 @@ import type {
 interface PigramContextType {
   currentUser: User | null;
   setCurrentUser: (user: User) => void;
+  profileCompleted: boolean;
+  setProfileCompleted: (completed: boolean) => void;
   conversations: Conversation[];
   addConversation: (conversation: Conversation) => void;
   updateConversation: (id: string, conversation: Partial<Conversation>) => void;
@@ -46,6 +48,7 @@ const PigramContext = createContext<PigramContextType | undefined>(undefined);
 
 export function PigramProvider({ children }: { children: ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [profileCompleted, setProfileCompleted] = useState(false);
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [messages, setMessages] = useState<Map<string, Message[]>>(new Map());
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -175,6 +178,8 @@ export function PigramProvider({ children }: { children: ReactNode }) {
   const value: PigramContextType = {
     currentUser,
     setCurrentUser,
+    profileCompleted,
+    setProfileCompleted,
     conversations,
     addConversation,
     updateConversation,

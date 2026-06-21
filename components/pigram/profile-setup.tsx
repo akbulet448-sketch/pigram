@@ -44,11 +44,11 @@ export default function ProfileSetup({ onProfileComplete }: ProfileSetupProps) {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-background text-foreground max-w-md mx-auto w-full">
+    <div style={{ minHeight: "100vh", background: "white", color: "black" }} className="flex flex-col max-w-md mx-auto w-full">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-8 pt-16 pb-12">
+      <div style={{ background: "linear-gradient(to right, #3b82f6, #2563eb)" }} className="text-white p-8 pt-16 pb-12">
         <h1 className="text-3xl font-bold mb-2">Welcome to Pigram</h1>
-        <p className="text-blue-100">Create your profile to get started</p>
+        <p style={{ color: "#dbeafe" }}>Create your profile to get started</p>
       </div>
 
       {/* Content */}
@@ -103,11 +103,15 @@ export default function ProfileSetup({ onProfileComplete }: ProfileSetupProps) {
       </div>
 
       {/* Footer */}
-      <div className="border-t border-border bg-background p-6">
+      <div style={{ borderTop: "1px solid #e5e7eb", background: "white" }} className="p-6">
         <button
           onClick={handleComplete}
           disabled={!displayName.trim() || isLoading}
-          className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-muted disabled:text-muted-foreground text-white font-semibold rounded-lg px-4 py-3 transition-colors flex items-center justify-center gap-2"
+          style={{
+            background: !displayName.trim() || isLoading ? "#f3f4f6" : "#3b82f6",
+            color: !displayName.trim() || isLoading ? "#9ca3af" : "white",
+          }}
+          className="w-full hover:bg-blue-600 disabled:bg-gray-200 disabled:text-gray-500 text-white font-semibold rounded-lg px-4 py-3 transition-colors flex items-center justify-center gap-2"
         >
           {isLoading ? (
             <>

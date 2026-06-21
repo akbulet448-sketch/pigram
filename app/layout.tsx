@@ -7,7 +7,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Made with App Studio",
-  description: "Pi Network app",
+  description: "Pigram - Modern Chat Application",
     generator: 'v0.app'
 };
 
@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-background">
+    <html lang="en" className="light">
       <head>
         <style>{`
 html {
@@ -28,7 +28,7 @@ html {
         `}</style>
         <script dangerouslySetInnerHTML={{__html: `document.title = 'Made with App Studio';`}} />
       </head>
-      <body>
+      <body className="bg-background text-foreground">
         <AppWrapper>{children}</AppWrapper>
       </body>
     </html>

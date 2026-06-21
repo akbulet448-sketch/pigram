@@ -6,13 +6,13 @@ export function AuthLoadingScreen() {
   const { authMessage, hasError, reinitialize } = usePiAuth();
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
+    <div style={{ minHeight: "100vh", background: "white" }} className="flex items-center justify-center">
       <div className="max-w-md w-full px-6 text-center space-y-6">
         <div className="flex justify-center">
           {hasError ? (
-            <div className="w-20 h-20 rounded-full bg-destructive/10 flex items-center justify-center">
+            <div className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center">
               <svg
-                className="w-10 h-10 text-destructive"
+                className="w-10 h-10 text-red-600"
                 fill="none"
                 strokeWidth="2"
                 stroke="currentColor"
@@ -27,19 +27,19 @@ export function AuthLoadingScreen() {
             </div>
           ) : (
             <div className="relative">
-              <div className="w-20 h-20 rounded-full border-4 border-primary/20" />
-              <div className="absolute inset-0 w-20 h-20 rounded-full border-4 border-primary border-t-transparent animate-spin" />
+              <div className="w-20 h-20 rounded-full border-4 border-blue-200" />
+              <div className="absolute inset-0 w-20 h-20 rounded-full border-4 border-blue-600 border-t-transparent animate-spin" />
             </div>
           )}
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-2xl font-semibold">
+          <h2 className="text-2xl font-semibold text-gray-800">
             {hasError ? "Authentication Failed" : "Pi Network Authentication"}
           </h2>
           <p
             className={`text-sm ${
-              hasError ? "text-destructive" : "text-muted-foreground"
+              hasError ? "text-red-600" : "text-gray-600"
             }`}
           >
             {authMessage}
@@ -49,7 +49,7 @@ export function AuthLoadingScreen() {
         {hasError && (
           <button
             onClick={reinitialize}
-            className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
           >
             Retry Authentication
           </button>
