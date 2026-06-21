@@ -70,52 +70,40 @@ export default function PigramApp() {
     <>
       <PigramDataInitializer />
       <MeetingLinkHandler />
-      <div className="flex flex-col h-screen bg-background text-foreground max-w-md mx-auto w-full">
+      <div style={{ minHeight: "100vh", background: "white", color: "black" }} className="flex flex-col max-w-md mx-auto w-full">
         <div className="flex-1 overflow-y-auto pb-20">{renderTab()}</div>
 
         {/* Bottom Tab Bar */}
-        <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-background max-w-md mx-auto w-full">
+        <div style={{ borderTop: "1px solid #e5e7eb", background: "white", position: "fixed", bottom: 0, left: 0, right: 0 }} className="max-w-md mx-auto w-full">
           <div className="flex justify-around">
             <button
               onClick={() => setActiveTab("chats")}
-              className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${
-                activeTab === "chats"
-                  ? "text-blue-500"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+              style={{ color: activeTab === "chats" ? "#3b82f6" : "#9ca3af" }}
+              className="flex-1 py-4 flex flex-col items-center gap-1 transition-colors hover:text-gray-700"
             >
               <MessageCircle size={24} />
               <span className="text-xs">Chats</span>
             </button>
             <button
               onClick={() => setActiveTab("contacts")}
-              className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${
-                activeTab === "contacts"
-                  ? "text-blue-500"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+              style={{ color: activeTab === "contacts" ? "#3b82f6" : "#9ca3af" }}
+              className="flex-1 py-4 flex flex-col items-center gap-1 transition-colors hover:text-gray-700"
             >
               <Users size={24} />
               <span className="text-xs">Contacts</span>
             </button>
             <button
               onClick={() => setActiveTab("calls")}
-              className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${
-                activeTab === "calls"
-                  ? "text-blue-500"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+              style={{ color: activeTab === "calls" ? "#3b82f6" : "#9ca3af" }}
+              className="flex-1 py-4 flex flex-col items-center gap-1 transition-colors hover:text-gray-700"
             >
               <Phone size={24} />
               <span className="text-xs">Calls</span>
             </button>
             <button
               onClick={() => setActiveTab("settings")}
-              className={`flex-1 py-4 flex flex-col items-center gap-1 transition-colors ${
-                activeTab === "settings"
-                  ? "text-blue-500"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+              style={{ color: activeTab === "settings" ? "#3b82f6" : "#9ca3af" }}
+              className="flex-1 py-4 flex flex-col items-center gap-1 transition-colors hover:text-gray-700"
             >
               <Settings size={24} />
               <span className="text-xs">Settings</span>
